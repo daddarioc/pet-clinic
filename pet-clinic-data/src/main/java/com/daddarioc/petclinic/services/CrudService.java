@@ -1,7 +1,5 @@
 package com.daddarioc.petclinic.services;
 
-import com.sun.xml.internal.bind.v2.model.core.ID;
-
 import java.util.Set;
 
 /**
@@ -9,11 +7,11 @@ import java.util.Set;
  * @param <T>
  * @param <Id>
  */
-public interface CrudService<T, Id> {
+public interface CrudService<T, ID> {
 
     Set<T> findAll();
     T findById(ID id);
     T save(T object);
     void delete(T object);
-    void deleteById(T id);
+    void deleteById(ID id);
 }
