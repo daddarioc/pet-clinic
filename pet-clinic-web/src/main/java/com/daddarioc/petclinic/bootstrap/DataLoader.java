@@ -4,23 +4,21 @@ import com.daddarioc.petclinic.model.Owner;
 import com.daddarioc.petclinic.model.Vet;
 import com.daddarioc.petclinic.services.OwnerService;
 import com.daddarioc.petclinic.services.VetService;
-import com.daddarioc.petclinic.services.map.OwnerServiceMap;
-import com.daddarioc.petclinic.services.map.VetServiceMap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
-@Component
 /**
  * Non Spring-managed example of how to get startup data in a HashMap implementation
  */
+@Component
 public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    public DataLoader() {
-        ownerService = new OwnerServiceMap();
-        vetService = new VetServiceMap();
+    public DataLoader(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override
