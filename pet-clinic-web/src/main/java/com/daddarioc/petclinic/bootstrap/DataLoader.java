@@ -1,6 +1,7 @@
 package com.daddarioc.petclinic.bootstrap;
 
 import com.daddarioc.petclinic.model.Owner;
+import com.daddarioc.petclinic.model.Pet;
 import com.daddarioc.petclinic.model.PetType;
 import com.daddarioc.petclinic.model.Vet;
 import com.daddarioc.petclinic.services.OwnerService;
@@ -8,6 +9,8 @@ import com.daddarioc.petclinic.services.PetTypeService;
 import com.daddarioc.petclinic.services.VetService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
 
 /**
  * Non Spring-managed example of how to get startup data in a HashMap implementation
@@ -41,12 +44,32 @@ public class DataLoader implements CommandLineRunner {
         Owner owner1 = new Owner();
         owner1.setFirstName("Chris");
         owner1.setLastName("D'Addario");
+        owner1.setAddress("724 Evergreen Terrace");
+        owner1.setTelephone("555-867-5309");
+
+        Pet chrisPet = new Pet();
+        chrisPet.setPetType(savedDogPetType);
+        chrisPet.setOwner(owner1);
+        chrisPet.setBirthDate(LocalDateTime.now());
+        chrisPet.setName("Scout");
+
+        owner1.getPets().add(chrisPet);
 
         ownerService.save(owner1);
 
         Owner owner2 = new Owner();
         owner2.setFirstName("Holly");
         owner2.setLastName("D'Addario");
+        owner2.setAddress("724 Evergreen Terrace");
+        owner2.setTelephone("555-867-5309");
+
+        Pet hollyPet = new Pet();
+        hollyPet.setPetType(savedCatPetType);
+        hollyPet.setOwner(owner2);
+        hollyPet.setBirthDate(LocalDateTime.now());
+        hollyPet.setName("Quinn");
+
+        owner2.getPets().add(hollyPet);
 
         ownerService.save(owner2);
 
