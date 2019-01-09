@@ -1,4 +1,4 @@
-package com.daddarioc.petclinic.springdatajpa;
+package com.daddarioc.petclinic.services.springdatajpa;
 
 import com.daddarioc.petclinic.model.PetType;
 import com.daddarioc.petclinic.repositories.PetTypeRepository;
