@@ -2,6 +2,8 @@ package com.daddarioc.petclinic.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Represents a pet in the database
@@ -23,6 +25,17 @@ public class Pet extends BaseEntity {
 
     @Column(name = "name")
     private String name;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "pet") // a pet may have many visits
+    private Set<Visit> visits = new HashSet<>();
+
+    public Set<Visit> getVisits() {
+        return visits;
+    }
+
+    public void setVisits(Set<Visit> visits) {
+        this.visits = visits;
+    }
 
     public String getName() {
         return name;

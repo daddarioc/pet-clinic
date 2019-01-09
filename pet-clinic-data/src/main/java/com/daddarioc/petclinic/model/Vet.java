@@ -4,6 +4,9 @@ import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Represents a vet in the database
+ */
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
