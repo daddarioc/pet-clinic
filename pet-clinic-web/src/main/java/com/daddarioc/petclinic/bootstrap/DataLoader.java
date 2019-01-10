@@ -2,15 +2,17 @@ package com.daddarioc.petclinic.bootstrap;
 
 import com.daddarioc.petclinic.model.*;
 import com.daddarioc.petclinic.services.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
 /**
- * Non Spring-managed example of how to get startup data in a HashMap implementation
+ * Generate test data when using H2 database
  */
 @Component
+@Slf4j
 public class DataLoader implements CommandLineRunner {
 
     private final OwnerService ownerService;
@@ -27,10 +29,16 @@ public class DataLoader implements CommandLineRunner {
         this.visitService = visitService;
     }
 
+    /**
+     * Check to see if we should load test data depending on database present
+     * @param args Args
+     * @throws Exception Exception
+     */
     @Override
     public void run(String... args) throws Exception {
 
         // 12/31/18 do a check to load data only if it isn't yet present when we switch to a real DB
+        log.debug("Checking services to see if we should load test data...");
         int count = petTypeService.findAll().size();
         if (count == 0) {
             loadData();
@@ -38,8 +46,12 @@ public class DataLoader implements CommandLineRunner {
 
     }
 
+    /**
+     * Populate repositories with test data
+     */
     private void loadData() {
 
+        log.debug("Loading PetTypes");
         // persist the petType to the map, in order to get the corresponding map id
         PetType dog = new PetType();
         dog.setName("Dog");
@@ -49,6 +61,7 @@ public class DataLoader implements CommandLineRunner {
         dog.setName("Cat");
         PetType savedCatPetType = petTypeService.save(dog);
 
+        log.debug("Loading Specialties");
         // persist the specialties to the map in order to get the corresponding map id
         Specialty radiology = new Specialty();
         radiology.setDescription("Radiology");
@@ -61,8 +74,6 @@ public class DataLoader implements CommandLineRunner {
         Specialty dentistry = new Specialty();
         radiology.setDescription("Dentistry");
         Specialty savedDentistry = specialtyService.save(dentistry);
-
-        System.out.println("Loaded PetTypes...");
 
         Owner owner1 = new Owner();
         owner1.setFirstName("Chris");
@@ -96,7 +107,7 @@ public class DataLoader implements CommandLineRunner {
 
         ownerService.save(owner2);
 
-        System.out.println("Loaded owners...");
+        log.debug("Loaded owners");
 
         Visit catVisit = new Visit();
         catVisit.setPet(hollyPet);
@@ -104,7 +115,7 @@ public class DataLoader implements CommandLineRunner {
         catVisit.setDescription("Routine checkup");
         visitService.save(catVisit);
 
-        System.out.println("Loaded a visit...");
+        log.debug("Loaded a visit");
 
         Vet vet1 = new Vet();
         vet1.setFirstName("John");
@@ -120,6 +131,6 @@ public class DataLoader implements CommandLineRunner {
 
         vetService.save(vet2);
 
-        System.out.println("Loaded vets...");
+        log.debug("Loaded Vets");
     }
 }
